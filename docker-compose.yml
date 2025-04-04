@@ -10,7 +10,14 @@ services:
     restart: unless-stopped
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
-
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: unless-stopped
   node-exporter:
     image: prom/node-exporter
     container_name: node-exporter
@@ -20,3 +27,4 @@ services:
 
 volumes:
     prometheus_data:
+    grafana_data:
