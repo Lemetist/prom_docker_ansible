@@ -11,15 +11,6 @@ services:
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
 
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana_data:/var/lib/grafana
-    restart: unless-stopped
-
   node-exporter:
     image: prom/node-exporter
     container_name: node-exporter
@@ -27,29 +18,5 @@ services:
       - "9100:9100"
     restart: unless-stopped
 
-  postgres:
-    image: postgres:16
-    container_name: postgres
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: mydb
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-  postgres-exporter:
-    image: quay.io/prometheuscommunity/postgres-exporter
-    container_name: postgres-exporter
-    environment:
-      DATA_SOURCE_NAME: "postgresql://admin:secret@postgres:5432/mydb?sslmode=disable"
-    ports:
-      - "9187:9187"
-    depends_on:
-      - postgres
-    restart: unless-stopped
-
 volumes:
-  prometheus_data:
-  grafana_data:
-  postgres_data:
+    prometheus_data:
